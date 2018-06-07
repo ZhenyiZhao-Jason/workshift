@@ -74,7 +74,7 @@ rule "At most one shift assignment per day per employee"
         scoreHolder.addHardConstraintMatch(kcontext, -10);
 end
 
-rule "No 2 shifts within 10 hours from each other"
+rule "No 2 shifts within 24 hours from each other"
     when
         $s : Shift(
                 employee != null,
@@ -83,7 +83,7 @@ rule "No 2 shifts within 10 hours from each other"
         Shift(
                 employee == $e,
                 $leftEndDateTime <= endDateTime,
-                $leftEndDateTime.until(startDateTime, ChronoUnit.HOURS) < 10,
+                $leftEndDateTime.until(startDateTime, ChronoUnit.HOURS) < 24,
                 this != $s)
     then
         scoreHolder.addHardConstraintMatch(kcontext, -1);
